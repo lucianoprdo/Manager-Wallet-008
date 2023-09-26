@@ -1,6 +1,6 @@
-export const SAVE_USER_EMAIL = 'SAVE_EMAIL';
+export const SAVE_USER_EMAIL = 'SAVE_USER_EMAIL';
 
-export const saveUserEmail = (userEmail: string) => ({
+export const userActions = (userEmail: string) => ({
   type: SAVE_USER_EMAIL,
-  payload: userEmail,
+  payload: { email: userEmail },
 });

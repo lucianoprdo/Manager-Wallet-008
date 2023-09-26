@@ -2,23 +2,23 @@ import { AnyAction } from 'redux';
 import { SAVE_USER_EMAIL } from '../actions/userActions';
 
 const INITIAL_STATE = {
-  email: 'alguem@email.com',
+  email: '',
   password: '',
 };
 
-const userReducer = (
+const user = (
   state = INITIAL_STATE,
-  { type, payload }: AnyAction,
+  userActions: AnyAction,
 ) => {
-  switch (type) {
+  switch (userActions.type) {
     case SAVE_USER_EMAIL:
       return {
         ...state,
-        ...payload.email,
+        email: userActions.payload.email,
       };
     default:
       return state;
   }
 };
 
-export default userReducer;
+export default user;

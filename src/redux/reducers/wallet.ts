@@ -1,26 +1,44 @@
 import { AnyAction } from 'redux';
-import { ADD_EXPENSE } from '../actions/walletActions';
-import { WalletType } from '../../types';
+import { WALLET_DATA, EXPENSES_DATA, DELETE_EXPENSE } from '../actions';
+import { ExpenseItem } from '../../types';
 
-const INITIAL_STATE: WalletType = {
-  isFetching: false,
+const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   editor: false,
   idToEdit: 0,
-  count: 0,
 };
 
-const walletReducer = (state = INITIAL_STATE, { type, payload }: AnyAction) => {
-  switch (type) {
-    case ADD_EXPENSE:
+function wallet(state = INITIAL_STATE, action: AnyAction) {
+  switch (action.type) {
+    case WALLET_DATA:
       return {
         ...state,
-        payload,
+        currencies: action.currencies,
       };
+
+    case EXPENSES_DATA:
+      return {
+        ...state,
+        expenses: [
+          ...state.expenses,
+          {
+            ...action.payload.expenses,
+            id: state.expenses.length,
+            exchangeRates: action.payload.data,
+          },
+        ],
+      };
+
+    case DELETE_EXPENSE:
+      return {
+        ...state,
+        expenses: state.expenses.filter((id: ExpenseItem) => id.id !== action.payload),
+      };
+
     default:
       return state;
   }
-};
+}
 
-export default walletReducer;
+export default wallet;

@@ -3,20 +3,27 @@ import { useSelector } from 'react-redux';
 import { ReduxState } from '../types';
 
 function Header() {
-  const userEmail = useSelector((state: ReduxState) => state.user.email);
+  const { user, wallet } = useSelector((state: ReduxState) => state);
+  const { expenses } = wallet;
+
+  const totalExpenses: number = expenses.reduce((acc, cur) => (
+    Number(cur.exchangeRates[cur.currency].ask * cur.value) + acc
+  ), 0);
 
   return (
-    <header>
-      <div data-testid="email-field">
+    <div>
+      <img src="" alt="" />
+      <p data-testid="email-field">
         E-mail:
         {' '}
-        {userEmail}
+        {user.email}
+      </p>
+      <div>
+        <span>Despesa Total:</span>
+        <span data-testid="total-field">{totalExpenses.toFixed(2)}</span>
+        <span data-testid="header-currency-field">BRL</span>
       </div>
-
-      <div data-testid="total-field">Total: 0</div>
-
-      <div data-testid="header-currency-field">BRL</div>
-    </header>
+    </div>
   );
 }
 

@@ -20,4 +20,46 @@ describe('Verifica funcionalidade da page Login', () => {
     await userEvent.type(inputPassword, PASSWORD);
     await userEvent.click(button);
   });
+
+  it('Verifica se o botão Entrar estará habilitado ao preencher dados corretamente', async () => {
+    renderWithRouterAndRedux(<App />);
+
+    const enterButton = screen.getByRole('button', { name: /entrar/i });
+    const inputPassword = screen.getByPlaceholderText(/password/i);
+    const inputEmail = screen.getByPlaceholderText(/e-mail/i);
+
+    expect(enterButton).toBeDisabled();
+
+    await userEvent.type(inputEmail, '123');
+
+    expect(enterButton).toBeDisabled();
+
+    await userEvent.clear(inputPassword);
+    await userEvent.clear(inputEmail);
+
+    await userEvent.type(inputEmail, EMAIL);
+    await userEvent.type(inputPassword, PASSWORD);
+
+    await userEvent.click(enterButton);
+
+    const email = screen.getByText(/tryber@teste.com/i);
+    expect(email).toBeInTheDocument();
+  });
+
+  it('Verifica se ao clicar em no botão Entrar a rota seja direcionada para "/carteira"', async () => {
+    renderWithRouterAndRedux(<App />);
+
+    const enterButton = screen.getByRole('button', { name: /entrar/i });
+    const inputPassword = screen.getByPlaceholderText(/password/i);
+
+    await userEvent.type(screen.getByPlaceholderText(/e-mail/i), EMAIL);
+    await userEvent.type(inputPassword, PASSWORD);
+
+    await userEvent.click(enterButton);
+
+    const email = screen.getByText(/tryber@teste.com/i);
+    expect(email).toBeInTheDocument();
+
+    expect(enterButton).not.toBeInTheDocument();
+  });
 });

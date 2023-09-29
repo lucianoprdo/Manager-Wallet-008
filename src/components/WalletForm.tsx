@@ -38,6 +38,7 @@ function WalletForm() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     dispatch(fetchExpenses(formData));
+    const result = { formData: dataExpenses };
     setFormData(dataExpenses);
   }
 

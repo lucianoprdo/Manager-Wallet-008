@@ -5,10 +5,9 @@ import { renderWithRouterAndRedux } from '../helpers/renderWith';
 
 const EMAIL = 'tryber@teste.com';
 const PASSWORD = '123@ewR';
-// const route = '/carteira';
 
 describe('Verifica funcionalidade da page Login', () => {
-  it.only('Testa funcionalidade dos inputs e button da tela de Login', async () => {
+  it('Testa funcionalidade dos inputs e button da tela de Login', async () => {
     renderWithRouterAndRedux(<App />);
 
     const inputEmail = screen.getByPlaceholderText(/e-mail/i);

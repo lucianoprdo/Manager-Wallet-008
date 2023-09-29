@@ -7,12 +7,11 @@ function Header() {
   const { expenses } = wallet;
 
   const totalExpenses: number = expenses.reduce((acc, cur) => (
-    Number(cur.exchangeRates[cur.currency].ask * cur.value) + acc
+    Number(cur.exchangeRates[cur.currency]?.ask ?? 0) * cur.value + acc
   ), 0);
 
   return (
     <div>
-      <img src="" alt="" />
       <p data-testid="email-field">
         E-mail:
         {' '}

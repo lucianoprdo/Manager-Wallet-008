@@ -1,17 +1,15 @@
 import { vi } from 'vitest';
 import { mockData } from '../helpers/mockData';
-
-const END_POINT = 'https://economia.awesomeapi.com.br/json/all';
+import { getApi } from '../../services/getApi';
 
 describe('Verifica se API tem o retorno correto', () => {
   it.only('Testa a API', async () => {
     vi.mock('fetch', async () => {
-      vi.fn('https://economia.awesomeapi.com.br/json/all').return(mockData);
+      vi.fn(getApi).mockResolvedValue(mockData);
 
-      const response = await fetch(END_POINT);
-      const data = await response.json();
+      const response = await getApi();
 
-      expect(data).toEqual(mockData);
+      expect(response).toEqual(mockData);
     });
   });
 });

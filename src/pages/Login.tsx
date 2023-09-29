@@ -16,13 +16,13 @@ function Login() {
   const [passwordError, setPasswordError] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  const validateEmail = (userEmail: string) => {
+  const validatedEmail = (userEmail: string) => {
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     return emailRegex.test(userEmail);
   };
 
   const handleLogin = () => {
-    if (!validateEmail(userInfo.email)) {
+    if (!validatedEmail(userInfo.email)) {
       setEmailError('E-mail inválido');
     } else if (userInfo.password.length < 6) {
       setPasswordError('Senha deve ter pelo menos 6 caracteres');
@@ -35,7 +35,7 @@ function Login() {
 
   useEffect(() => {
     const checkButtonStatus = () => {
-      if (validateEmail(userInfo.email) && userInfo.password.length >= 6) {
+      if (validatedEmail(userInfo.email) && userInfo.password.length >= 6) {
         setIsButtonDisabled(false);
       } else {
         setIsButtonDisabled(true);
@@ -55,6 +55,7 @@ function Login() {
             type="email"
             id="email"
             data-testid="email-input"
+            placeholder="E-mail"
             value={ userInfo.email }
             onChange={ (event) => setUserInfo({
               ...userInfo, email: event.target.value }) }
@@ -67,6 +68,7 @@ function Login() {
           <input
             type="password"
             id="password"
+            placeholder="Password"
             data-testid="password-input"
             value={ userInfo.password }
             onChange={ (event) => setUserInfo({
@@ -75,7 +77,12 @@ function Login() {
           {passwordError && <div>{passwordError}</div>}
         </div>
 
-        <button type="button" onClick={ handleLogin } disabled={ isButtonDisabled }>
+        <button
+          type="button"
+          name="entrar"
+          onClick={ handleLogin }
+          disabled={ isButtonDisabled }
+        >
           Entrar
         </button>
 

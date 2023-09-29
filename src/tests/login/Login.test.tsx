@@ -21,7 +21,7 @@ describe('Verifica funcionalidade da page Login', () => {
     await userEvent.click(button);
   });
 
-  it('Verifica se o botão Entrar estará habilitado ao preencher dados corretamente', async () => {
+  it('Testa se o botão Entrar estará habilitado ao preencher dados corretamente', async () => {
     renderWithRouterAndRedux(<App />);
 
     const enterButton = screen.getByRole('button', { name: /entrar/i });
@@ -46,7 +46,7 @@ describe('Verifica funcionalidade da page Login', () => {
     expect(email).toBeInTheDocument();
   });
 
-  it('Verifica se ao clicar em no botão Entrar a rota seja direcionada para "/carteira"', async () => {
+  it('Testa se ao clicar em no botão Entrar a rota seja direcionada para "/carteira"', async () => {
     renderWithRouterAndRedux(<App />);
 
     const enterButton = screen.getByRole('button', { name: /entrar/i });

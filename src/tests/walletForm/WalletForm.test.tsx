@@ -15,7 +15,7 @@ describe('Verifica funcionalidade do componente WalletForm', () => {
   it('Deve renderizar o botão "Adicionar despesa"', () => {
     const { getByText } = renderWithRouterAndRedux(<WalletForm />);
 
-    const addButton = getByText('Adicionar despesa'); // Substitua 'Adicionar' pelo texto real do seu botão
+    const addButton = getByText('Adicionar despesa');
 
     expect(addButton).toBeInTheDocument();
   });

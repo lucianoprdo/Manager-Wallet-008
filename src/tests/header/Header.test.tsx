@@ -5,7 +5,6 @@ import { renderWithRouterAndRedux } from '../helpers/renderWith';
 import Header from '../../components/Header';
 import { mockState } from '../helpers/mockState';
 
-// Mock useSelector para retornar o estado fictício
 vi.mock('react-redux', async () => {
   const actual: unknown = await vi.importActual('react-redux');
   return {

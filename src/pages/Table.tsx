@@ -1,8 +1,14 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../types';
+import { deleteExpenses } from '../redux/actions';
 
 function Table() {
   const globalState = useSelector((state: ReduxState) => state.wallet);
+  const dispatch = useDispatch();
+
+  function handleDelete(id: number) {
+    dispatch(deleteExpenses(id));
+  }
 
   return (
     <table>
@@ -20,22 +26,30 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {globalState && globalState.expenses.map((expense) => {
-          const { description, tag, method, value, exchangeRates, currency } = expense;
-
-          return (
-            <tr key={ expense.id }>
-              <td>{description}</td>
-              <td>{tag}</td>
-              <td>{method}</td>
-              <td>{Number(value).toFixed(2)}</td>
-              <td>{exchangeRates[currency].name}</td>
-              <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
-              <td>{(value * exchangeRates[currency].ask).toFixed(2)}</td>
-              <td>Real</td>
-            </tr>
-          );
-        })}
+        {globalState && globalState
+          .expenses.map(({
+            id, description, tag, method, value, exchangeRates, currency }) => (
+              <tr key={ id }>
+                <td>{description}</td>
+                <td>{tag}</td>
+                <td>{method}</td>
+                <td>{Number(value).toFixed(2)}</td>
+                <td>{exchangeRates[currency].name}</td>
+                <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
+                <td>{(value * exchangeRates[currency].ask).toFixed(2)}</td>
+                <td>Real</td>
+                <td>
+                  <button>Editar</button>
+                  <button
+                    data-testid="delete-btn"
+                    id={ id.toString() }
+                    onClick={ () => handleDelete(id) }
+                  >
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+          ))}
       </tbody>
     </table>
   );

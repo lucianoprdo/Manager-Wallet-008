@@ -1,5 +1,6 @@
 import { AnyAction } from 'redux';
-import { WALLET_DATA, EXPENSES_DATA, DELETE_EXPENSE } from '../actions';
+import { WALLET_DATA, EXPENSES_DATA,
+  DELETE_EXPENSE, EDIT_EXPENSE, UPDATED_EXPENSES } from '../actions';
 import { ExpenseItem } from '../../types';
 
 const INITIAL_STATE = {
@@ -34,6 +35,20 @@ function wallet(state = INITIAL_STATE, action: AnyAction) {
       return {
         ...state,
         expenses: state.expenses.filter((id: ExpenseItem) => id.id !== action.payload),
+      };
+
+    case EDIT_EXPENSE:
+      return {
+        ...state,
+        edition: true,
+        idEdit: action.payload,
+      };
+
+    case UPDATED_EXPENSES:
+      return {
+        ...state,
+        expenses: action.payload,
+        edition: false,
       };
 
     default:

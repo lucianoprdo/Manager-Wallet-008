@@ -27,8 +27,9 @@ export type WalletType = {
       name: string;
     }];
   }],
-  editor: boolean;
+  edition: boolean;
   idToEdit: number;
+  count: number;
 };
 
 export type ReduxState = {

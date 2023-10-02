@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../types';
-import { deleteExpenses } from '../redux/actions';
+import { deleteExpenses, editExpenses } from '../redux/actions';
 
 function Table() {
   const globalState = useSelector((state: ReduxState) => state.wallet);
@@ -39,7 +39,13 @@ function Table() {
                 <td>{(value * exchangeRates[currency].ask).toFixed(2)}</td>
                 <td>Real</td>
                 <td>
-                  <button>Editar</button>
+                  <button
+                    data-testid="edit-btn"
+                    onClick={ () => dispatch(editExpenses(id)) }
+                  >
+                    Editar despesa
+
+                  </button>
                   <button
                     data-testid="delete-btn"
                     id={ id.toString() }

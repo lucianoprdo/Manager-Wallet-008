@@ -16,12 +16,10 @@ vi.mock('react-redux', async () => {
 const useSelectorMock = vi.mocked(useSelector);
 
 beforeEach(() => {
-  // Mock useSelector para retornar o estado fictício
   useSelectorMock.mockImplementation((selector: any) => selector(mockState));
 });
 
 afterEach(() => {
-  // Limpe o estado fictício e redefina o useSelector
   useSelectorMock.mockClear();
 });
 

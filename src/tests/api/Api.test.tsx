@@ -3,7 +3,7 @@ import { mockData } from '../helpers/mockData';
 import { getApi } from '../../services/getApi';
 
 describe('Verifica se API tem o retorno correto', () => {
-  it.only('Testa a API', async () => {
+  it('Testa a API', async () => {
     vi.mock('fetch', async () => {
       vi.fn(getApi).mockResolvedValue(mockData);
 

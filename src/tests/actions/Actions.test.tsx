@@ -6,6 +6,7 @@ import {
   saveCurrencies,
   saveExpenses,
 } from '../../redux/actions/index';
+import { SAVE_USER_EMAIL, userActions } from '../../redux/actions/userActions';
 
 describe('Verifica loginData', () => {
   it('deve retornar uma action com o tipo LOGIN_DATA e o payload com o login', () => {
@@ -112,5 +113,14 @@ describe('Redux Actions', () => {
     const action = updatedExpenses(expenseData);
     expect(action.type).toEqual('UPDATED_EXPENSES');
     expect(action.payload).toEqual(expenseData);
+  });
+});
+
+describe('User Actions', () => {
+  it.only('Deve retornar o objeto de ação userActions', () => {
+    const userEmail = 'tryber@teste.com';
+    const action = userActions(userEmail);
+    expect(action.type).toEqual(SAVE_USER_EMAIL);
+    expect(action.payload).toEqual({ email: userEmail });
   });
 });

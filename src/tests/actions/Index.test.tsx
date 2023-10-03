@@ -9,7 +9,7 @@ import {
 import { SAVE_USER_EMAIL, userActions } from '../../redux/actions/userActions';
 
 describe('Verifica loginData', () => {
-  it('deve retornar uma action com o tipo LOGIN_DATA e o payload com o login', () => {
+  it('Deve retornar uma action com o tipo LOGIN_DATA e o payload com o login', () => {
     const login = { email: 'tryber@teste.com' };
     const expectedAction = {
       type: 'LOGIN_DATA',
@@ -23,7 +23,7 @@ describe('Verifica loginData', () => {
 });
 
 describe('Verifica WALLET_DATA', () => {
-  it('deve retornar uma action com o tipo WALLET_DATA e o payload com as moedas', () => {
+  it('Deve retornar uma action com o tipo WALLET_DATA e o payload com as moedas', () => {
     const currencies = ['USD', 'BRL', 'CAD'];
     const expectedAction = {
       type: 'WALLET_DATA',
@@ -36,8 +36,8 @@ describe('Verifica WALLET_DATA', () => {
   });
 });
 
-describe('expensesData', () => {
-  it('deve retornar uma action com o tipo EXPENSES_DATA e o payload com as despesas e os dados da API', () => {
+describe('Verifica expensesData', () => {
+  it('Deve retornar uma action com o tipo EXPENSES_DATA e o payload com as despesas e os dados da API', () => {
     const data = { USD: { ask: 1.0 }, BRL: { ask: 5.0 } };
     const expenses = [{ id: 1, value: 100, currency: 'USD' }];
     const expectedAction = {
@@ -93,7 +93,7 @@ describe('Verifica updatedExpenses', () => {
   });
 });
 
-describe('Redux Actions', () => {
+describe('Verifica Actions', () => {
   it('Deve retornar o objeto de ação deleteExpenses', () => {
     const id = 1;
     const action = deleteExpenses(id);
@@ -116,8 +116,8 @@ describe('Redux Actions', () => {
   });
 });
 
-describe('User Actions', () => {
-  it.only('Deve retornar o objeto de ação userActions', () => {
+describe('Verifica User Actions', () => {
+  it('Deve retornar o objeto de ação userActions', () => {
     const userEmail = 'tryber@teste.com';
     const action = userActions(userEmail);
     expect(action.type).toEqual(SAVE_USER_EMAIL);

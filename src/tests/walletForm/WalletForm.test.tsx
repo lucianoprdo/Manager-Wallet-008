@@ -34,7 +34,7 @@ describe('Verifica funcionalidade do componente WalletForm', () => {
     expect(valueInput as HTMLElement).toBeTruthy();
   });
 
-  it('should handle form submission', () => {
+  it('Deve lidar com o envio do formulário', () => {
     const dispatch = vi.fn();
     const selector = vi.fn();
     selector.mockReturnValue({ currencies: ['USD'] });

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { fetchCurrencies, fetchExpenses, updatedExpenses } from '../redux/actions';
+import { fetchCurrencies, fetchExpenses } from '../redux/actions';
 import { Dispatch, ReduxState } from '../types';
 
 const dataExpenses = {
@@ -17,7 +17,7 @@ function WalletForm() {
   const { value, currency, description, method, tag } = formData;
 
   const dispatch: Dispatch = useDispatch();
-  const { currencies, edition } = useSelector(((state: ReduxState) => state.wallet));
+  const { currencies } = useSelector(((state: ReduxState) => state.wallet));
 
   useEffect(() => {
     async function getData() {

@@ -42,6 +42,23 @@ export type Dispatch = ThunkDispatch<ReduxState, null, AnyAction>;
 export type CurrencyType = 'USD' | 'ARS' | 'AUD' | 'BTC' | 'CAD' | 'CHF' | 'XRP' | 'CNY' |
 'DOGE' | 'ETH' | 'EUR' | 'GBP' | 'ILS' | 'JPY' | 'LTC';
 
+export type ExchangeRateType = { // checar se é realmente necessário
+  USD: CurrencyType,
+  CAD: CurrencyType,
+  EUR: CurrencyType,
+  GBP: CurrencyType,
+  ARS: CurrencyType,
+  BTC: CurrencyType,
+  LTC: CurrencyType,
+  JPY: CurrencyType,
+  CHF: CurrencyType,
+  AUD: CurrencyType,
+  CNY: CurrencyType,
+  ILS: CurrencyType,
+  ETH: CurrencyType,
+  XRP: CurrencyType,
+};
+
 export type ExpensesType = {
   id: number;
   value: string;

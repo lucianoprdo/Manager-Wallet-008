@@ -1,3 +1,4 @@
+// Table
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../types';
 import { deleteExpenses, editExpenses } from '../redux/actions';
@@ -8,6 +9,10 @@ function Table() {
 
   function handleDelete(id: number) {
     dispatch(deleteExpenses(id));
+  }
+
+  function handleEdit(id: number) {
+    dispatch(editExpenses(id));
   }
 
   return (
@@ -40,13 +45,15 @@ function Table() {
                 <td>Real</td>
                 <td>
                   <button
+                    type="button"
                     data-testid="edit-btn"
-                    onClick={ () => dispatch(editExpenses(id)) }
+                    onClick={ () => handleEdit(id) }
+                    disabled={ globalState.edition }
                   >
                     Editar despesa
-
                   </button>
                   <button
+                    type="button"
                     data-testid="delete-btn"
                     id={ id.toString() }
                     onClick={ () => handleDelete(id) }

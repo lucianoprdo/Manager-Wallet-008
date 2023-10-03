@@ -1,4 +1,4 @@
-import { Dispatch, UserType } from '../../types';
+import { Dispatch, ExpensesType, UserType } from '../../types';
 
 export const LOGIN_DATA = 'LOGIN_DATA';
 export const WALLET_DATA = 'WALLET_DATA';
@@ -32,9 +32,9 @@ export const editExpenses = (id: number) => ({
   payload: id,
 });
 
-export const updatedExpenses = (id: number) => ({
+export const updatedExpenses = (expense: ExpensesType) => ({
   type: UPDATED_EXPENSES,
-  payload: id,
+  payload: expense,
 });
 
 const URL_END_POINT = 'https://economia.awesomeapi.com.br/json/all';

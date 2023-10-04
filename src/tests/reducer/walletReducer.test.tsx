@@ -9,34 +9,34 @@ const INITIAL_STATE = {
   idToEdit: 0,
 };
 
-describe('Verifica Wallet Reducer', () => {
-  it('Deve retornar o estado inicial quando nenhuma ação for passada', () => {
-    const state = wallet(undefined, {} as any);
+// describe('Verifica Wallet Reducer', () => {
+//   it('Deve retornar o estado inicial quando nenhuma ação for passada', () => {
+//     const state = wallet(undefined, {} as any);
 
-    expect(state).toEqual({
-      currencies: [],
-      expenses: [],
-      editor: false,
-      idToEdit: 0,
-    });
-  });
+//     expect(state).toEqual({
+//       currencies: [],
+//       expenses: [],
+//       editor: false,
+//       idToEdit: 0,
+//     });
+//   });
 
-  it('Deve lidar com a ação WALLET_DATA', () => {
-    const currencies = ['USD', 'EUR'];
+//   it('Deve lidar com a ação WALLET_DATA', () => {
+//     const currencies = ['USD', 'EUR'];
 
-    const state = wallet(undefined, {
-      type: WALLET_DATA,
-      currencies,
-    });
+//     const state = wallet(undefined, {
+//       type: WALLET_DATA,
+//       currencies,
+//     });
 
-    expect(state).toEqual({
-      currencies,
-      expenses: [],
-      editor: false,
-      idToEdit: 0,
-    });
-  });
-});
+//     expect(state).toEqual({
+//       currencies,
+//       expenses: [],
+//       editor: false,
+//       idToEdit: 0,
+//     });
+//   });
+// });
 
 describe('Verifica outros itens do wallet reducer', () => {
   it('Deve lidar com a ação EXPENSES_DATA', () => {

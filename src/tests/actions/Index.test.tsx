@@ -1,11 +1,5 @@
-import {
-  deleteExpenses,
-  editExpenses,
-  updatedExpenses,
-  saveLogin,
-  saveCurrencies,
-  saveExpenses,
-} from '../../redux/actions/index';
+import { deleteExpenses, editExpenses, updatedExpenses,
+  saveLogin, saveCurrencies, saveExpenses } from '../../redux/actions/index';
 import { SAVE_USER_EMAIL, userActions } from '../../redux/actions/userActions';
 
 describe('Verifica loginData', () => {

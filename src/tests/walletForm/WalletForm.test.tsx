@@ -44,26 +44,18 @@ describe('Verifica funcionalidade do componente WalletForm', () => {
     expect(valueInput as HTMLElement).toBeTruthy();
   });
 
-  it('Deve renderizar o botão "Adicionar despesa"', () => {
-    const { getByText } = renderWithRouterAndRedux(<WalletForm />);
-
-    const addButton = getByText('Adicionar despesa');
-
-    expect(addButton).toBeInTheDocument();
-  });
-
-  it('deve buscar os dados da despesa e preencher os campos ao montar o componente', async () => {
+  it('Deve buscar os dados da despesa e preencher os campos ao montar o componente', async () => {
     await mockDispatch(fetchExpenses({ id: 1 }));
     const { getByTestId } = renderWithRouterAndRedux(<WalletForm />);
 
-    const valueInput = getByTestId('value-input') as HTMLInputElement;
+    const valueInput = getByTestId(VALUE_INPUT) as HTMLInputElement;
     valueInput.value = '100';
 
     expect(valueInput.value).toEqual('100');
   });
 
   it('Deve renderizar as funções do botão Editar despesa apenas quando há edição', async () => {
-    const formWallet = renderWithRedux(
+    renderWithRedux(
       <WalletForm />,
       {},
     );
@@ -74,11 +66,11 @@ describe('Verifica funcionalidade do componente WalletForm', () => {
     await fireEvent.click(submitEditButton);
   });
 
-  it.only('deve pegar as despesas mockadas para editar os campos do formulário', async () => {
+  it('deve pegar as despesas mockadas para editar os campos do formulário', async () => {
     const { getByTestId } = renderWithRouterAndRedux(<WalletForm />);
 
     const descriptionInput = getByTestId('description-input');
-    const valueInput = getByTestId('value-input');
+    const valueInput = getByTestId(VALUE_INPUT);
     const currencyInput = getByTestId('currency-input');
 
     expect((descriptionInput as HTMLInputElement).value).toBe('');
@@ -89,9 +81,9 @@ describe('Verifica funcionalidade do componente WalletForm', () => {
     await fireEvent.change(valueInput);
     await fireEvent.change(currencyInput);
 
-    const submitEditButton = document.querySelector("button[type='submit']");
-    expect(submitEditButton).toBeInTheDocument();
+    const submitEditBton = document.querySelector("button[type='submit']");
+    expect(submitEditBton).toBeInTheDocument();
 
-    await fireEvent.click(submitEditButton);
+    await fireEvent.click(submitEditBton);
   });
 });

@@ -1,15 +1,8 @@
-import { vi } from 'vitest';
-import { mockData } from '../helpers/mockData';
 import { getApi } from '../../services/getApi';
 
 describe('Verifica se API tem o retorno correto', () => {
   it('Testa a API', async () => {
-    vi.mock('fetch', async () => {
-      vi.fn(getApi).mockResolvedValue(mockData);
-
-      const response = await getApi();
-
-      expect(response).toEqual(mockData);
-    });
+    const data = await getApi();
+    expect(data.USD.code).toBe('USD');
   });
 });

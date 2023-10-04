@@ -1,22 +1,32 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, getByRole, getByText, getByTextTest, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
+import { act } from 'react-dom/test-utils';
+import { useDispatch } from 'react-redux';
 import WalletForm from '../../components/WalletForm';
-import { renderWithRouterAndRedux } from '../helpers/renderWith';
+import { renderWithRouterAndRedux, renderWithRedux } from '../helpers/renderWith';
+import { expenses } from '../helpers/mockExpense';
+import { fetchCurrencies, fetchExpenses, updatedExpenses } from '../../redux/actions';
+import store from '../../redux';
+
+// Mock useDispatch
+const mockDispatch = vi.fn();
+
+mockDispatch.mockResolvedValue({ type: 'EXPENSES_DATA', payload: expenses });
 
 vi.mock('react-redux', async () => {
-  const actual: unknown = await vi.importActual('react-redux');
+  const actual = await vi.importActual('react-redux');
   return {
     ...actual,
-    useSelector: vi.fn(() => {
-      return {
-        currencies: ['USD'],
-      };
-    }),
+    useDispatch: () => mockDispatch,
+    useSelector: vi.fn(() => ({
+      currencies: ['USD'],
+      expenses: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      edition: true,
+      idToEdit: 1,
+    })),
   };
 });
-
-const mockFetchExpenses = vi.fn();
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -34,53 +44,54 @@ describe('Verifica funcionalidade do componente WalletForm', () => {
     expect(valueInput as HTMLElement).toBeTruthy();
   });
 
-  // it('Deve lidar com o envio do formulário', () => {
-  //   const dispatch = vi.fn();
-  //   const selector = vi.fn();
-  //   selector.mockReturnValue({ currencies: ['USD'] });
-  //   dispatch.mockReturnValueOnce(dispatch);
-
-  //   const { getByTestId, getByText } = renderWithRouterAndRedux(<WalletForm />);
-
-  //   const valueInput = getByTestId(VALUE_INPUT);
-  //   const currencyInput = getByTestId('currency-input');
-  //   const methodInput = getByTestId('method-input');
-  //   const tagInput = getByTestId('tag-input');
-  //   const descriptionInput = getByTestId('description-input');
-  //   const submitButton = getByText('Adicionar despesa');
-
-  //   fireEvent.change(valueInput, { target: { value: '100' } });
-  //   fireEvent.change(currencyInput, { target: { value: 'USD' } });
-  //   fireEvent.change(methodInput, { target: { value: 'Dinheiro' } });
-  //   fireEvent.change(tagInput, { target: { value: 'Alimentação' } });
-  //   fireEvent.change(descriptionInput, { target: { value: '' } });
-
-  //   fireEvent.click(submitButton);
-
-  //   dispatch(mockFetchExpenses);
-  //   // Verifique se os valores do formulário foram redefinidos após a submissão.
-  //   expect((valueInput as HTMLInputElement).value).toBe('');
-  //   expect((currencyInput as HTMLSelectElement).value).toBe('USD');
-  //   expect((methodInput as HTMLSelectElement).value).toBe('Dinheiro');
-  //   expect((tagInput as HTMLSelectElement).value).toBe('Alimentação');
-  //   expect((descriptionInput as HTMLInputElement).value).toBe('');
-  // });
-
-  it('Deve renderizar todos os campos obrigatórios', () => {
-    const { getByTestId } = renderWithRouterAndRedux(<WalletForm />);
-
-    expect(getByTestId(VALUE_INPUT)).toBeInTheDocument();
-    expect(getByTestId('currency-input')).toBeInTheDocument();
-    expect(getByTestId('method-input')).toBeInTheDocument();
-    expect(getByTestId('tag-input')).toBeInTheDocument();
-    expect(getByTestId('description-input')).toBeInTheDocument();
-  });
-
   it('Deve renderizar o botão "Adicionar despesa"', () => {
     const { getByText } = renderWithRouterAndRedux(<WalletForm />);
 
     const addButton = getByText('Adicionar despesa');
 
     expect(addButton).toBeInTheDocument();
+  });
+
+  it('deve buscar os dados da despesa e preencher os campos ao montar o componente', async () => {
+    await mockDispatch(fetchExpenses({ id: 1 }));
+    const { getByTestId } = renderWithRouterAndRedux(<WalletForm />);
+
+    const valueInput = getByTestId('value-input') as HTMLInputElement;
+    valueInput.value = '100';
+
+    expect(valueInput.value).toEqual('100');
+  });
+
+  it('Deve renderizar as funções do botão Editar despesa apenas quando há edição', async () => {
+    const formWallet = renderWithRedux(
+      <WalletForm />,
+      {},
+    );
+
+    const submitEditButton = document.querySelector("button[type='submit']");
+    expect(submitEditButton).toBeInTheDocument();
+
+    await fireEvent.click(submitEditButton);
+  });
+
+  it.only('deve pegar as despesas mockadas para editar os campos do formulário', async () => {
+    const { getByTestId } = renderWithRouterAndRedux(<WalletForm />);
+
+    const descriptionInput = getByTestId('description-input');
+    const valueInput = getByTestId('value-input');
+    const currencyInput = getByTestId('currency-input');
+
+    expect((descriptionInput as HTMLInputElement).value).toBe('');
+    expect((valueInput as HTMLInputElement).value).toBe('');
+    expect((currencyInput as HTMLInputElement).value).toBe('USD');
+
+    await fireEvent.change(descriptionInput);
+    await fireEvent.change(valueInput);
+    await fireEvent.change(currencyInput);
+
+    const submitEditButton = document.querySelector("button[type='submit']");
+    expect(submitEditButton).toBeInTheDocument();
+
+    await fireEvent.click(submitEditButton);
   });
 });

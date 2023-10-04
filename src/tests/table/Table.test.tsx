@@ -8,7 +8,7 @@ describe('Verifica se a tabela é renderizada corretamente', () => {
     const dispatch = vi.fn();
     const expenses = [{ id: 1, description: 'Café' }];
 
-    const table = renderWithRouterAndRedux(<Table />, { initialState: { expenses } }); // Passar o estado inicial com as despesas
+    const table = renderWithRouterAndRedux(<Table />, { initialState: { expenses } });
 
     dispatch(deleteExpenses(1));
 

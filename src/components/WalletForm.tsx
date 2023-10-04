@@ -27,14 +27,14 @@ function WalletForm() {
     }
     getData();
     if (edition) {
-      const expenseToEdit = expenses[idToEdit];
+      const getToEdit = expenses[idToEdit];
       setForm({
-        id: expenseToEdit.id,
-        description: expenseToEdit.description,
-        tag: expenseToEdit.tag,
-        value: expenseToEdit.value as any,
-        currency: expenseToEdit.currency as any,
-        method: expenseToEdit.method,
+        id: getToEdit.id,
+        description: getToEdit.description,
+        tag: getToEdit.tag,
+        value: getToEdit.value as any,
+        currency: getToEdit.currency as any,
+        method: getToEdit.method,
       });
     }
   }, [dispatch, edition]);
@@ -54,11 +54,13 @@ function WalletForm() {
       ...expenses[idToEdit],
       ...form,
     };
-    const newExpenses = [
+
+    const additionalExpenses = [
       ...expenses,
     ];
-    newExpenses[idToEdit] = editedExpense;
-    dispatch(updatedExpenses(newExpenses as any));
+
+    additionalExpenses[idToEdit] = editedExpense;
+    dispatch(updatedExpenses(additionalExpenses as any));
     setForm(INITIAL_STATE);
   }
 
@@ -146,6 +148,7 @@ function WalletForm() {
         <button
           type="submit"
           onClick={ (event) => handleUpdate(event) }
+          // data-testid="update-button"
         >
           Editar despesa
         </button>

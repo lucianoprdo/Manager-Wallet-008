@@ -6,7 +6,7 @@ import { ExpenseItem } from '../../types';
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  editor: false,
+  edition: false,
   idToEdit: 0,
 };
 
@@ -41,20 +41,19 @@ function wallet(state = INITIAL_STATE, action: AnyAction) {
       return {
         ...state,
         edition: true,
-        idEdit: action.payload,
+        idToEdit: action.payload,
       };
 
     case UPDATED_EXPENSES:
       return {
         ...state,
         expenses: state.expenses.map((expense: any) => {
-          if (expense.id === state.idToEdit) {
-            return ({ ...state.expenses[state.idToEdit] as any, ...action.payload });
+          if (expense.id === action.payload.id) {
+            return ({ ...expense, ...action.payload });
           }
           return expense;
         }),
         edition: false,
-        idToEdit: 0,
       };
     default:
       return state;

@@ -48,7 +48,7 @@ function Table() {
                     type="button"
                     data-testid="edit-btn"
                     onClick={ () => handleEdit(id) }
-                    disabled={ globalState.edition }
+                    // disabled={ globalState.edition }
                   >
                     Editar despesa
                   </button>

@@ -3,12 +3,6 @@ import WalletForm from '../components/WalletForm';
 import Table from './Table';
 
 function Wallet() {
-  // const dispatch: Dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(fetchCurrencies());
-  // }, [dispatch]);
-
   return (
     <>
       <Header />

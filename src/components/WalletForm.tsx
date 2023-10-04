@@ -3,52 +3,90 @@ import { useEffect, useState } from 'react';
 import { fetchCurrencies, fetchExpenses, updatedExpenses } from '../redux/actions';
 import { Dispatch, ReduxState } from '../types';
 
-const dataExpenses = {
+const INITIAL_STATE = {
   id: 0,
+  description: '',
+  tag: 'Alimentação',
   value: '',
   currency: 'USD',
-  method: '',
-  tag: '',
-  description: '',
+  method: 'Dinheiro',
 };
 
 function WalletForm() {
-  const [formData, setFormData] = useState(dataExpenses);
-  const { value, currency, description, method, tag } = formData;
+  const { currencies, edition,
+    expenses, idToEdit } = useSelector(((state: ReduxState) => state.wallet));
+
+  const [form, setForm] = useState(INITIAL_STATE);
+  const { value, currency, description, method, tag } = form;
 
   const dispatch: Dispatch = useDispatch();
-  const { currencies, edition } = useSelector(((state: ReduxState) => state.wallet));
 
   useEffect(() => {
     async function getData() {
       await dispatch(fetchCurrencies());
     }
     getData();
-  }, [dispatch]);
+    if (edition) {
+      const expenseToEdit = expenses[idToEdit];
+      setForm({
+        id: expenseToEdit.id,
+        description: expenseToEdit.description,
+        tag: expenseToEdit.tag,
+        value: expenseToEdit.value as any,
+        currency: expenseToEdit.currency as any,
+        method: expenseToEdit.method,
+      });
+    }
+  }, [dispatch, edition]);
 
   function handleChange({ target }:
   React.ChangeEvent<HTMLInputElement
   | HTMLSelectElement>) {
-    setFormData({
-      ...formData,
+    setForm({
+      ...form,
       [target.name]: target.value,
     });
   }
 
+  function handleEdit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const editedExpense: any = {
+      ...expenses[idToEdit],
+      ...form,
+    };
+    const newExpenses = [
+      ...expenses,
+    ];
+    newExpenses[idToEdit] = editedExpense;
+    dispatch(updatedExpenses(newExpenses as any));
+    setForm(INITIAL_STATE);
+  }
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    dispatch(fetchExpenses(formData));
-    setFormData(dataExpenses);
+    dispatch(fetchExpenses(form));
+    const expenseId = expenses.length > 0 ? expenses.length : 0;
+    const dataExpenses = {
+      id: expenseId,
+      value: value.toString(),
+      currency: 'USD',
+      method: '',
+      tag: '',
+      description: '',
+      // exchangeRates: {},
+    };
+    dispatch(updatedExpenses(dataExpenses as any));
+    setForm(INITIAL_STATE);
   }
 
   const handleUpdate = (event: any) => {
     event.preventDefault();
-    dispatch(updatedExpenses(formData as any));
-    setFormData(dataExpenses);
+    dispatch(updatedExpenses(form as any));
+    setForm(INITIAL_STATE);
   };
 
   return (
-    <form onSubmit={ handleSubmit } data-testid="edit-form">
+    <form onSubmit={ edition ? handleEdit : handleSubmit } data-testid="edit-form">
       <label>
         Valor:
         <input

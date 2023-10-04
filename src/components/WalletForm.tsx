@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { fetchCurrencies, fetchExpenses } from '../redux/actions';
+import { fetchCurrencies, fetchExpenses, updatedExpenses } from '../redux/actions';
 import { Dispatch, ReduxState } from '../types';
 
 const dataExpenses = {
@@ -17,7 +17,7 @@ function WalletForm() {
   const { value, currency, description, method, tag } = formData;
 
   const dispatch: Dispatch = useDispatch();
-  const { currencies } = useSelector(((state: ReduxState) => state.wallet));
+  const { currencies, edition } = useSelector(((state: ReduxState) => state.wallet));
 
   useEffect(() => {
     async function getData() {
@@ -41,8 +41,14 @@ function WalletForm() {
     setFormData(dataExpenses);
   }
 
+  const handleUpdate = (event: any) => {
+    event.preventDefault();
+    dispatch(updatedExpenses(formData as any));
+    setFormData(dataExpenses);
+  };
+
   return (
-    <form onSubmit={ handleSubmit }>
+    <form onSubmit={ handleSubmit } data-testid="edit-form">
       <label>
         Valor:
         <input
@@ -98,7 +104,21 @@ function WalletForm() {
           onChange={ handleChange }
         />
       </label>
-      <button>Adicionar despesa</button>
+      {edition ? (
+        <button
+          type="submit"
+          onClick={ (event) => handleUpdate(event) }
+        >
+          Editar despesa
+        </button>
+      ) : (
+        <button
+          type="submit"
+          onClick={ (event) => handleSubmit(event as any) }
+        >
+          Adicionar despesa
+        </button>
+      )}
     </form>
   );
 }

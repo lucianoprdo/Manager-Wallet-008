@@ -1,3 +1,4 @@
+import { getApi } from '../../services/getApi';
 import { Dispatch, ExpensesType, UserType } from '../../types';
 
 export const LOGIN_DATA = 'LOGIN_DATA';
@@ -37,14 +38,10 @@ export const updatedExpenses = (expense: ExpensesType) => ({
   payload: expense,
 });
 
-const URL_END_POINT = 'https://economia.awesomeapi.com.br/json/all';
-
 export function fetchCurrencies() {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await fetch(URL_END_POINT);
-      const data = await response.json();
-      delete data.USDT;
+      const data = await getApi();
       const currencies = Object.keys(data);
       dispatch(saveCurrencies(currencies));
     } catch (error: any) {
@@ -56,8 +53,7 @@ export function fetchCurrencies() {
 export function fetchExpenses(expenses: object) {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await fetch(URL_END_POINT);
-      const data = await response.json();
+      const data = await getApi();
       dispatch(saveExpenses(data, expenses));
     } catch (error: any) {
       throw new Error('Erro ao buscar dados da API: + error.message');

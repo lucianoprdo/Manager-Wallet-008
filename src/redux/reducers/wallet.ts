@@ -47,10 +47,15 @@ function wallet(state = INITIAL_STATE, action: AnyAction) {
     case UPDATED_EXPENSES:
       return {
         ...state,
-        expenses: action.payload,
+        expenses: state.expenses.map((expense: any) => {
+          if (expense.id === state.idToEdit) {
+            return ({ ...state.expenses[state.idToEdit] as any, ...action.payload });
+          }
+          return expense;
+        }),
         edition: false,
+        idToEdit: 0,
       };
-
     default:
       return state;
   }

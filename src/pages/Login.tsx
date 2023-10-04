@@ -22,15 +22,9 @@ function Login() {
   };
 
   const handleLogin = () => {
-    if (!validatedEmail(userInfo.email)) {
-      setEmailError('E-mail inválido');
-    } else if (userInfo.password.length < 6) {
-      setPasswordError('Senha deve ter pelo menos 6 caracteres');
-    } else {
-      dispatch({ type: SAVE_USER_EMAIL, payload: { email: userInfo.email } });
+    dispatch({ type: SAVE_USER_EMAIL, payload: { email: userInfo.email } });
 
-      navigate('/carteira');
-    }
+    navigate('/carteira');
   };
 
   useEffect(() => {

@@ -1,0 +1,25 @@
+export const expenses = [{
+  id: 1,
+  value: 100,
+  currency: 'USD',
+  description: 'Food',
+  method: 'Cash',
+  tag: 'Personal',
+  exchangeRates: {},
+}, {
+  id: 2,
+  value: 200,
+  currency: 'EUR',
+  description: 'Gas',
+  method: 'Credit Card',
+  tag: 'Transportation',
+  exchangeRates: {},
+}, {
+  id: 3,
+  value: 300,
+  currency: 'BRL',
+  description: 'Rent',
+  method: 'Debit Card',
+  tag: 'Housing',
+  exchangeRates: {},
+}];

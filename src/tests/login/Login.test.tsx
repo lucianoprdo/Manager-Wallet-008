@@ -62,4 +62,23 @@ describe('Verifica funcionalidade da page Login', () => {
 
     expect(enterButton).not.toBeInTheDocument();
   });
+
+  // it.only('Testa se há mensagem de erro quando os dados estão errados nos inputs', async () => {
+  //   renderWithRouterAndRedux(<App />);
+
+  //   const enterButton = screen.getByRole('button', { name: /entrar/i });
+  //   const inputPassword = screen.getByPlaceholderText(/password/i);
+
+  //   await userEvent.type(screen.getByPlaceholderText(/e-mail/i), 'email@');
+  //   await userEvent.type(inputPassword, '123');
+
+  //   expect(enterButton).toBeDisabled();
+
+  //   userEvent.click(enterButton);
+
+  //   const email = screen.getByText(/E-mail inválido/i);
+  //   expect(email).toBeInTheDocument();
+
+  //   expect(enterButton).toBeDisabled();
+  // });
 });

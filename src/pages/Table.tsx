@@ -11,10 +11,6 @@ function Table() {
     dispatch(deleteExpenses(id));
   }
 
-  function handleEdit(id: number) {
-    dispatch(editExpenses(id));
-  }
-
   return (
     <table>
       <thead>
@@ -44,12 +40,7 @@ function Table() {
                 <td>{(value * exchangeRates[currency].ask).toFixed(2)}</td>
                 <td>Real</td>
                 <td>
-                  <button
-                    type="button"
-                    data-testid="edit-btn"
-                    onClick={ () => handleEdit(id) }
-                    disabled={ globalState.edition }
-                  >
+                  <button>
                     Editar despesa
                   </button>
                   <button
